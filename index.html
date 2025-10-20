@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>卡牌征程</title>
+  <title>Card Crusade - A Balatro-inspired Game</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
@@ -49,17 +49,6 @@
       .animate-shine {
         animation: shine 1.5s ease-in-out infinite;
       }
-      .drag-over {
-        background-color: rgba(245, 158, 11, 0.1);
-        border-color: rgba(245, 158, 11, 0.5);
-      }
-      .item-hover {
-        transition: all 0.2s;
-      }
-      .item-hover:hover {
-        transform: scale(1.03);
-        background-color: rgba(245, 158, 11, 0.1);
-      }
     }
     
     @keyframes dealCard {
@@ -87,35 +76,35 @@
   <div class="container mx-auto px-4 py-8 max-w-7xl">
     <!-- 游戏标题 -->
     <header class="text-center mb-8">
-      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-game text-accent mb-2 tracking-wider">卡牌征程</h1>
-      <p class="text-light/70 text-lg">组合最佳手牌，获取高分，征服牌堆！</p>
+      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-game text-accent mb-2 tracking-wider">CARD CRUSADE</h1>
+      <p class="text-light/70 text-lg">Build the best hand, score big, conquer the deck!</p>
     </header>
     
     <!-- 游戏状态栏 -->
     <div class="flex flex-wrap justify-between items-center mb-6 gap-4 p-4 bg-dark/50 rounded-lg border border-light/10">
       <div class="flex items-center gap-6">
         <div>
-          <p class="text-sm text-light/60">分数</p>
+          <p class="text-sm text-light/60">Score</p>
           <p class="text-2xl font-bold text-accent" id="score">0</p>
         </div>
         <div>
-          <p class="text-sm text-light/60">回合</p>
+          <p class="text-sm text-light/60">Round</p>
           <p class="text-2xl font-bold text-accent" id="round">1</p>
         </div>
         <div>
-          <p class="text-sm text-light/60">剩余牌数</p>
-          <p class="text-2xl font-bold text-accent" id="cards-left">52</p>
+          <p class="text-sm text-light/60">Cards Left</p>
+          <p class="text-2xl font-bold text-accent" id="cards-left">40</p>
         </div>
       </div>
       
       <div class="flex gap-3">
         <button id="help-btn" class="px-4 py-2 bg-light/10 hover:bg-light/20 rounded-lg transition-all flex items-center gap-2">
           <i class="fa fa-question-circle"></i>
-          <span>帮助</span>
+          <span>Help</span>
         </button>
         <button id="restart-btn" class="px-4 py-2 bg-accent hover:bg-accent/80 rounded-lg transition-all flex items-center gap-2">
           <i class="fa fa-refresh"></i>
-          <span>重新开始</span>
+          <span>Restart</span>
         </button>
       </div>
     </div>
@@ -126,44 +115,36 @@
       <div class="lg:col-span-1 flex flex-col gap-6">
         <!-- 组合信息 -->
         <div class="bg-dark/50 rounded-lg border border-light/10 p-5">
-          <h2 class="text-xl font-bold mb-4 text-secondary">当前手牌</h2>
+          <h2 class="text-xl font-bold mb-4 text-secondary">Current Hand</h2>
           <div id="hand-info" class="space-y-2">
-            <p class="text-light/70">未选择卡牌</p>
+            <p class="text-light/70">No cards selected</p>
           </div>
         </div>
         
         <!-- 可能的组合 -->
         <div class="bg-dark/50 rounded-lg border border-light/10 p-5">
-          <h2 class="text-xl font-bold mb-4 text-secondary">可能的组合</h2>
+          <h2 class="text-xl font-bold mb-4 text-secondary">Possible Combos</h2>
           <div id="possible-combos" class="space-y-2 max-h-60 overflow-y-auto pr-2">
             <div class="p-2 bg-light/5 rounded border border-light/10">
-              <p class="font-bold">一对</p>
-              <p class="text-sm text-light/70">两张相同点数的牌 - 100分</p>
+              <p class="font-bold">Pair</p>
+              <p class="text-sm text-light/70">Two cards of the same rank - 100 points</p>
             </div>
             <div class="p-2 bg-light/5 rounded border border-light/10">
-              <p class="font-bold">三条</p>
-              <p class="text-sm text-light/70">三张相同点数的牌 - 300分</p>
+              <p class="font-bold">Three of a Kind</p>
+              <p class="text-sm text-light/70">Three cards of the same rank - 300 points</p>
             </div>
             <div class="p-2 bg-light/5 rounded border border-light/10">
-              <p class="font-bold">顺子</p>
-              <p class="text-sm text-light/70">五张点数连续的牌 - 500分</p>
+              <p class="font-bold">Straight</p>
+              <p class="text-sm text-light/70">Five consecutive ranks - 500 points</p>
             </div>
             <div class="p-2 bg-light/5 rounded border border-light/10">
-              <p class="font-bold">同花</p>
-              <p class="text-sm text-light/70">所有牌花色相同 - 600分</p>
+              <p class="font-bold">Flush</p>
+              <p class="text-sm text-light/70">All cards same suit - 600 points</p>
             </div>
             <div class="p-2 bg-light/5 rounded border border-light/10">
-              <p class="font-bold">同花顺</p>
-              <p class="text-sm text-light/70">点数连续且花色相同 - 1000分</p>
+              <p class="font-bold">Straight Flush</p>
+              <p class="text-sm text-light/70">Consecutive ranks, same suit - 1000 points</p>
             </div>
-          </div>
-        </div>
-        
-        <!-- 道具栏 -->
-        <div class="bg-dark/50 rounded-lg border border-light/10 p-5">
-          <h2 class="text-xl font-bold mb-4 text-secondary">你的道具</h2>
-          <div id="inventory" class="space-y-2 max-h-40 overflow-y-auto pr-2">
-            <p class="text-light/70">暂无道具</p>
           </div>
         </div>
       </div>
@@ -171,29 +152,28 @@
       <!-- 中间：主游戏区 -->
       <div class="lg:col-span-2 flex flex-col gap-6">
         <!-- 出牌区 -->
-        <div class="bg-dark/50 rounded-lg border border-light/10 p-5 min-h-[180px]" id="play-area-container">
-          <h2 class="text-xl font-bold mb-4 text-secondary">出牌区</h2>
-          <div id="play-area" class="flex flex-wrap gap-3 justify-center min-h-[120px]">
-            <p class="text-light/50 italic">将卡牌拖到此处组成你的手牌</p>
+        <div class="bg-dark/50 rounded-lg border border-light/10 p-5 min-h-[180px]">
+          <h2 class="text-xl font-bold mb-4 text-secondary">Play Area</h2>
+          <div id="play-area" class="flex flex-wrap gap-3 justify-center">
+            <p class="text-light/50 italic">Drag cards here to form your hand</p>
           </div>
         </div>
         
         <!-- 手牌区 -->
-        <div class="bg-dark/50 rounded-lg border border-light/10 p-5" id="hand-area-container">
-          <h2 class="text-xl font-bold mb-4 text-secondary">你的卡牌</h2>
-          <div id="hand-area" class="flex flex-wrap gap-3 justify-center min-h-[120px]">
+        <div class="bg-dark/50 rounded-lg border border-light/10 p-5">
+          <h2 class="text-xl font-bold mb-4 text-secondary">Your Cards</h2>
+          <div id="hand-area" class="flex flex-wrap gap-3 justify-center">
             <!-- 卡牌将通过JS动态生成 -->
-            <p class="text-light/50 italic">点击"抽牌"获取你的卡牌</p>
           </div>
         </div>
         
         <!-- 操作按钮 -->
         <div class="flex justify-center gap-4">
           <button id="draw-btn" class="px-6 py-3 bg-accent hover:bg-accent/80 rounded-lg transition-all font-bold text-lg animate-shine">
-            抽牌
+            Draw Cards
           </button>
           <button id="score-btn" class="px-6 py-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all font-bold text-lg" disabled>
-            计算得分
+            Score Hand
           </button>
         </div>
       </div>
@@ -202,11 +182,11 @@
     <!-- 游戏结束模态框 -->
     <div id="game-over-modal" class="fixed inset-0 bg-dark/80 flex items-center justify-center z-50 hidden">
       <div class="bg-dark border-2 border-accent rounded-lg p-8 max-w-md w-full mx-4 text-center">
-        <h2 class="text-3xl font-game text-accent mb-4">游戏结束</h2>
-        <p class="text-xl mb-2">你的最终得分</p>
+        <h2 class="text-3xl font-game text-accent mb-4">GAME OVER</h2>
+        <p class="text-xl mb-2">Your Final Score</p>
         <p class="text-4xl font-bold text-light mb-6" id="final-score">0</p>
         <button id="play-again-btn" class="px-6 py-3 bg-accent hover:bg-accent/80 rounded-lg transition-all font-bold text-lg w-full">
-          再玩一次
+          Play Again
         </button>
       </div>
     </div>
@@ -214,49 +194,30 @@
     <!-- 帮助模态框 -->
     <div id="help-modal" class="fixed inset-0 bg-dark/80 flex items-center justify-center z-50 hidden">
       <div class="bg-dark border-2 border-accent rounded-lg p-8 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-        <h2 class="text-2xl font-game text-accent mb-4">游戏说明</h2>
+        <h2 class="text-2xl font-game text-accent mb-4">How to Play</h2>
         <div class="space-y-4 text-light/90">
-          <p>1. 点击"抽牌"从牌堆获取5张牌</p>
-          <p>2. 从手牌区拖动卡牌到出牌区组成你的手牌</p>
-          <p>3. 组成卡牌组合获得分数</p>
-          <p>4. 点击"计算得分"统计你的分数并开始新回合</p>
-          <p>5. 每回合结束后可进入商店购买道具</p>
-          <p>6. 当牌堆用尽时游戏结束</p>
+          <p>1. Click "Draw Cards" to get 5 cards from the deck</p>
+          <p>2. Drag cards from your hand to the play area to form your hand</p>
+          <p>3. Create card combos to score points</p>
+          <p>4. Click "Score Hand" to calculate your points and start a new round</p>
+          <p>5. The game ends when the deck runs out of cards</p>
           
-          <h3 class="text-xl text-secondary mt-6 mb-2">组合分值</h3>
+          <h3 class="text-xl text-secondary mt-6 mb-2">Combo Values</h3>
           <ul class="list-disc pl-5 space-y-1">
-            <li>一对 - 100分</li>
-            <li>两对 - 250分</li>
-            <li>三条 - 300分</li>
-            <li>顺子 - 500分</li>
-            <li>同花 - 600分</li>
-            <li>葫芦 - 800分</li>
-            <li>四条 - 900分</li>
-            <li>同花顺 - 1000分</li>
-            <li>皇家同花顺 - 2000分</li>
+            <li>Pair - 100 points</li>
+            <li>Two Pairs - 250 points</li>
+            <li>Three of a Kind - 300 points</li>
+            <li>Straight - 500 points</li>
+            <li>Flush - 600 points</li>
+            <li>Full House - 800 points</li>
+            <li>Four of a Kind - 900 points</li>
+            <li>Straight Flush - 1000 points</li>
+            <li>Royal Flush - 2000 points</li>
           </ul>
         </div>
         <button id="close-help-btn" class="mt-6 px-6 py-2 bg-accent hover:bg-accent/80 rounded-lg transition-all font-bold">
-          关闭
+          Close
         </button>
-      </div>
-    </div>
-    
-    <!-- 商店模态框 -->
-    <div id="shop-modal" class="fixed inset-0 bg-dark/80 flex items-center justify-center z-50 hidden">
-      <div class="bg-dark border-2 border-accent rounded-lg p-8 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-        <h2 class="text-2xl font-game text-accent mb-6 text-center">道具商店</h2>
-        <p class="text-center mb-6">当前积分: <span id="shop-score" class="text-accent font-bold">0</span></p>
-        
-        <div id="shop-items" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 商店物品将通过JS动态生成 -->
-        </div>
-        
-        <div class="mt-8 text-center">
-          <button id="close-shop-btn" class="px-6 py-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all font-bold">
-            结束购物
-          </button>
-        </div>
       </div>
     </div>
   </div>
@@ -270,57 +231,8 @@
       score: 0,
       round: 1,
       cardsLeft: 52,
-      gameOver: false,
-      draggedCardId: null,
-      inventory: [], // 道具栏
-      activeEffects: {} // 当前生效的效果
+      gameOver: false
     };
-    
-    // 道具配置
-    const shopItems = [
-      {
-        id: 'extra_card',
-        name: '额外卡牌',
-        description: '本回合可获得6张手牌而非5张',
-        cost: 150,
-        icon: 'fa-plus-square'
-      },
-      {
-        id: 'score_boost',
-        name: '分数增幅',
-        description: '本回合得分增加20%',
-        cost: 200,
-        icon: 'fa-percent'
-      },
-      {
-        id: 'card_replace',
-        name: '卡牌替换',
-        description: '本回合可替换2张不满意的卡牌',
-        cost: 100,
-        icon: 'fa-exchange'
-      },
-      {
-        id: 'flush_bonus',
-        name: '同花加成',
-        description: '同花组合得分翻倍',
-        cost: 300,
-        icon: 'fa-diamond'
-      },
-      {
-        id: 'straight_bonus',
-        name: '顺子加成',
-        description: '顺子组合得分翻倍',
-        cost: 300,
-        icon: 'fa-arrows-h'
-      },
-      {
-        id: 'royal_bonus',
-        name: '皇家幸运',
-        description: '皇家同花顺概率小幅提升',
-        cost: 500,
-        icon: 'fa-star'
-      }
-    ];
     
     // 卡牌配置
     const suits = ['hearts', 'diamonds', 'clubs', 'spades'];
@@ -333,8 +245,6 @@
     // DOM元素
     const handArea = document.getElementById('hand-area');
     const playArea = document.getElementById('play-area');
-    const handAreaContainer = document.getElementById('hand-area-container');
-    const playAreaContainer = document.getElementById('play-area-container');
     const scoreDisplay = document.getElementById('score');
     const roundDisplay = document.getElementById('round');
     const cardsLeftDisplay = document.getElementById('cards-left');
@@ -348,11 +258,6 @@
     const helpBtn = document.getElementById('help-btn');
     const helpModal = document.getElementById('help-modal');
     const closeHelpBtn = document.getElementById('close-help-btn');
-    const shopModal = document.getElementById('shop-modal');
-    const shopScoreDisplay = document.getElementById('shop-score');
-    const shopItemsContainer = document.getElementById('shop-items');
-    const closeShopBtn = document.getElementById('close-shop-btn');
-    const inventoryContainer = document.getElementById('inventory');
     
     // 初始化游戏
     function initGame() {
@@ -364,9 +269,6 @@
       gameState.round = 1;
       gameState.cardsLeft = 52;
       gameState.gameOver = false;
-      gameState.draggedCardId = null;
-      gameState.inventory = [];
-      gameState.activeEffects = {};
       
       // 更新UI
       updateScore();
@@ -375,12 +277,10 @@
       renderHand();
       renderPlayArea();
       updateHandInfo();
-      renderInventory();
       
       // 禁用按钮
       scoreBtn.disabled = true;
       gameOverModal.classList.add('hidden');
-      shopModal.classList.add('hidden');
     }
     
     // 创建一副新牌
@@ -402,15 +302,6 @@
     
     // 洗牌算法
     function shuffleDeck(deck) {
-      // 如果有皇家幸运效果，增加高牌概率
-      if (gameState.activeEffects.royal_bonus) {
-        // 复制高牌（10到A）增加概率
-        const highCards = deck.filter(card => 
-          ['10', 'J', 'Q', 'K', 'A'].includes(card.rank)
-        );
-        deck = [...deck, ...highCards.slice(0, 5)];
-      }
-      
       for (let i = deck.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -419,10 +310,7 @@
     }
     
     // 抽牌
-    function drawCards() {
-      // 确定抽牌数量（默认5张，有额外卡牌道具则6张）
-      const count = gameState.activeEffects.extra_card ? 6 : 5;
-      
+    function drawCards(count = 5) {
       if (gameState.deck.length < count) {
         endGame();
         return;
@@ -448,60 +336,6 @@
       // 禁用抽牌按钮，启用计分按钮
       drawBtn.disabled = true;
       scoreBtn.disabled = false;
-      
-      // 如果有卡牌替换道具，显示替换按钮
-      if (gameState.activeEffects.card_replace) {
-        addReplaceButtons();
-      }
-    }
-    
-    // 添加卡牌替换按钮
-    function addReplaceButtons() {
-      const replaceContainer = document.createElement('div');
-      replaceContainer.id = 'replace-container';
-      replaceContainer.className = 'mt-4 text-center';
-      
-      const replaceBtn1 = document.createElement('button');
-      replaceBtn1.className = 'px-4 py-2 bg-primary hover:bg-primary/80 rounded-lg transition-all mr-2';
-      replaceBtn1.innerHTML = '<i class="fa fa-refresh mr-1"></i> 替换1张牌';
-      replaceBtn1.addEventListener('click', () => replaceCards(1));
-      
-      const replaceBtn2 = document.createElement('button');
-      replaceBtn2.className = 'px-4 py-2 bg-primary hover:bg-primary/80 rounded-lg transition-all';
-      replaceBtn2.innerHTML = '<i class="fa fa-refresh mr-1"></i> 替换2张牌';
-      replaceBtn2.addEventListener('click', () => replaceCards(2));
-      
-      replaceContainer.appendChild(replaceBtn1);
-      replaceContainer.appendChild(replaceBtn2);
-      handAreaContainer.parentNode.appendChild(replaceContainer);
-    }
-    
-    // 替换卡牌
-    function replaceCards(count) {
-      if (gameState.deck.length < count) {
-        alert('牌堆中没有足够的牌进行替换');
-        return;
-      }
-      
-      // 移除最前面的n张牌并替换
-      for (let i = 0; i < count; i++) {
-        gameState.hand.shift();
-        const newCard = gameState.deck.pop();
-        gameState.hand.push(newCard);
-        gameState.cardsLeft--;
-      }
-      
-      // 重新渲染手牌
-      renderHand();
-      
-      // 移除替换按钮
-      const replaceContainer = document.getElementById('replace-container');
-      if (replaceContainer) {
-        replaceContainer.remove();
-      }
-      
-      // 禁用卡牌替换效果
-      gameState.activeEffects.card_replace = false;
     }
     
     // 计算手牌分数
@@ -509,218 +343,79 @@
       if (gameState.playArea.length === 0) return 0;
       
       // 分析手牌
-      let combo = analyzeHand(gameState.playArea);
-      let score = combo.score;
-      
-      // 应用分数增幅效果
-      if (gameState.activeEffects.score_boost) {
-        score = Math.round(score * 1.2);
-      }
-      
-      // 应用同花加成效果
-      if (gameState.activeEffects.flush_bonus && combo.type === '同花') {
-        score *= 2;
-      }
-      
-      // 应用顺子加成效果
-      if (gameState.activeEffects.straight_bonus && combo.type === '顺子') {
-        score *= 2;
-      }
-      
-      // 更新组合信息（包含加成）
-      const displayedCombo = {
-        ...combo,
-        score: score
-      };
-      
-      updateHandInfo(displayedCombo);
+      const combo = analyzeHand(gameState.playArea);
+      updateHandInfo(combo);
       
       // 添加分数
-      gameState.score += score;
+      gameState.score += combo.score;
       updateScore();
-      
-      // 移除替换按钮（如果存在）
-      const replaceContainer = document.getElementById('replace-container');
-      if (replaceContainer) {
-        replaceContainer.remove();
-      }
-      
-      // 准备进入下一轮
-      prepareNextRound();
-      
-      return score;
-    }
-    
-    // 准备下一轮
-    function prepareNextRound() {
-      // 清空当前效果
-      gameState.activeEffects = {};
       
       // 进入下一轮
       gameState.round++;
       updateRound();
       
-      // 显示商店
-      showShop();
-    }
-    
-    // 显示商店
-    function showShop() {
-      // 更新商店中的分数显示
-      shopScoreDisplay.textContent = gameState.score;
+      // 重新启用抽牌按钮，禁用计分按钮
+      drawBtn.disabled = false;
+      scoreBtn.disabled = true;
       
-      // 渲染商店物品
-      renderShopItems();
-      
-      // 显示商店模态框
-      shopModal.classList.remove('hidden');
-    }
-    
-    // 渲染商店物品
-    function renderShopItems() {
-      shopItemsContainer.innerHTML = '';
-      
-      shopItems.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'p-4 bg-light/5 rounded border border-light/10 item-hover flex justify-between items-center';
-        
-        itemElement.innerHTML = `
-          <div>
-            <div class="flex items-center">
-              <i class="fa ${item.icon} text-accent mr-2"></i>
-              <h3 class="font-bold">${item.name}</h3>
-            </div>
-            <p class="text-sm text-light/70 mt-1">${item.description}</p>
-          </div>
-          <div class="text-right">
-            <p class="text-accent font-bold">${item.cost} 分</p>
-            <button class="buy-btn mt-2 px-3 py-1 bg-accent hover:bg-accent/80 rounded text-sm font-bold" 
-                    data-item-id="${item.id}" 
-                    ${gameState.score < item.cost ? 'disabled' : ''}>
-              购买
-            </button>
-          </div>
-        `;
-        
-        shopItemsContainer.appendChild(itemElement);
-      });
-      
-      // 添加购买事件监听
-      document.querySelectorAll('.buy-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const itemId = e.currentTarget.dataset.itemId;
-          buyItem(itemId);
-        });
-      });
-    }
-    
-    // 购买物品
-    function buyItem(itemId) {
-      const item = shopItems.find(i => i.id === itemId);
-      
-      if (!item) return;
-      if (gameState.score < item.cost) return;
-      
-      // 扣除分数
-      gameState.score -= item.cost;
-      updateScore();
-      shopScoreDisplay.textContent = gameState.score;
-      
-      // 将物品添加到库存或立即生效
-      gameState.activeEffects[itemId] = true;
-      
-      // 更新库存显示
-      renderInventory();
-      
-      // 重新渲染商店（更新购买按钮状态）
-      renderShopItems();
-      
-      // 显示购买成功提示
-      alert(`成功购买: ${item.name}`);
-    }
-    
-    // 渲染库存
-    function renderInventory() {
-      inventoryContainer.innerHTML = '';
-      
-      const activeItems = Object.entries(gameState.activeEffects)
-        .filter(([_, active]) => active)
-        .map(([id, _]) => shopItems.find(item => item.id === id));
-      
-      if (activeItems.length === 0) {
-        inventoryContainer.innerHTML = '<p class="text-light/70">暂无道具</p>';
-        return;
-      }
-      
-      activeItems.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'p-2 bg-light/5 rounded border border-light/10 flex items-center';
-        itemElement.innerHTML = `
-          <i class="fa ${item.icon} text-accent mr-2"></i>
-          <div>
-            <p class="font-bold text-sm">${item.name}</p>
-            <p class="text-xs text-light/70">${item.description}</p>
-          </div>
-        `;
-        inventoryContainer.appendChild(itemElement);
-      });
+      return combo.score;
     }
     
     // 分析手牌组合
     function analyzeHand(hand) {
       if (hand.length < 2) {
-        return { type: '无组合', score: 0 };
+        return { type: 'No Combo', score: 0 };
       }
       
       // 按点数排序
       const sortedHand = [...hand].sort((a, b) => a.value - b.value);
       
-      // 检查皇家同花顺
+      // 检查同花大顺
       if (isRoyalFlush(sortedHand)) {
-        return { type: '皇家同花顺', score: 2000 };
+        return { type: 'Royal Flush', score: 2000 };
       }
       
       // 检查同花顺
       if (isStraightFlush(sortedHand)) {
-        return { type: '同花顺', score: 1000 };
+        return { type: 'Straight Flush', score: 1000 };
       }
       
       // 检查四条
       if (isFourOfAKind(sortedHand)) {
-        return { type: '四条', score: 900 };
+        return { type: 'Four of a Kind', score: 900 };
       }
       
       // 检查葫芦
       if (isFullHouse(sortedHand)) {
-        return { type: '葫芦', score: 800 };
+        return { type: 'Full House', score: 800 };
       }
       
       // 检查同花
       if (isFlush(sortedHand)) {
-        return { type: '同花', score: 600 };
+        return { type: 'Flush', score: 600 };
       }
       
       // 检查顺子
       if (isStraight(sortedHand)) {
-        return { type: '顺子', score: 500 };
+        return { type: 'Straight', score: 500 };
       }
       
       // 检查三条
       if (isThreeOfAKind(sortedHand)) {
-        return { type: '三条', score: 300 };
+        return { type: 'Three of a Kind', score: 300 };
       }
       
       // 检查两对
       if (isTwoPairs(sortedHand)) {
-        return { type: '两对', score: 250 };
+        return { type: 'Two Pairs', score: 250 };
       }
       
       // 检查一对
       if (isPair(sortedHand)) {
-        return { type: '一对', score: 100 };
+        return { type: 'Pair', score: 100 };
       }
       
-      return { type: '高牌', score: 0 };
+      return { type: 'High Card', score: 0 };
     }
     
     // 组合检查函数
@@ -801,7 +496,7 @@
       handArea.innerHTML = '';
       
       if (gameState.hand.length === 0) {
-        handArea.innerHTML = '<p class="text-light/50 italic">点击"抽牌"获取你的卡牌</p>';
+        handArea.innerHTML = '<p class="text-light/50 italic">Click "Draw Cards" to get your cards</p>';
         return;
       }
       
@@ -816,7 +511,7 @@
       playArea.innerHTML = '';
       
       if (gameState.playArea.length === 0) {
-        playArea.innerHTML = '<p class="text-light/50 italic">将卡牌拖到此处组成你的手牌</p>';
+        playArea.innerHTML = '<p class="text-light/50 italic">Drag cards here to form your hand</p>';
         return;
       }
       
@@ -848,33 +543,9 @@
       cardElement.setAttribute('draggable', 'true');
       cardElement.dataset.cardId = card.id;
       
-      // 拖拽开始
       cardElement.addEventListener('dragstart', (e) => {
-        gameState.draggedCardId = card.id;
-        // 添加拖拽视觉效果
-        cardElement.classList.add('opacity-50');
-        // 设置拖拽图像
         e.dataTransfer.setData('text/plain', card.id);
-        // 创建自定义拖拽图像
-        const dragImage = cardElement.cloneNode(true);
-        dragImage.style.position = 'absolute';
-        dragImage.style.top = '-1000px';
-        document.body.appendChild(dragImage);
-        e.dataTransfer.setDragImage(dragImage, 20, 30);
-        
-        // 延迟移除克隆元素
-        setTimeout(() => {
-          document.body.removeChild(dragImage);
-        }, 0);
-      });
-      
-      // 拖拽结束
-      cardElement.addEventListener('dragend', () => {
-        cardElement.classList.remove('opacity-50');
-        gameState.draggedCardId = null;
-        // 移除所有拖放区域的高亮
-        playAreaContainer.classList.remove('drag-over');
-        handAreaContainer.classList.remove('drag-over');
+        e.dataTransfer.effectAllowed = 'move';
       });
       
       // 如果卡牌在出牌区，添加点击移除功能
@@ -945,14 +616,14 @@
       handInfo.innerHTML = '';
       
       if (gameState.playArea.length === 0) {
-        handInfo.innerHTML = '<p class="text-light/70">未选择卡牌</p>';
+        handInfo.innerHTML = '<p class="text-light/70">No cards selected</p>';
         return;
       }
       
       // 显示选中的卡牌
       const cardsList = document.createElement('div');
       cardsList.className = 'mb-3';
-      cardsList.innerHTML = `<p class="font-bold">已选卡牌: ${gameState.playArea.length}</p>`;
+      cardsList.innerHTML = `<p class="font-bold">Selected Cards: ${gameState.playArea.length}</p>`;
       handInfo.appendChild(cardsList);
       
       // 显示组合信息
@@ -961,7 +632,7 @@
         comboInfo.className = 'p-2 bg-accent/20 rounded border border-accent/30';
         comboInfo.innerHTML = `
           <p class="font-bold text-accent">${combo.type}</p>
-          <p class="text-light/80">+${combo.score} 分</p>
+          <p class="text-light/80">+${combo.score} points</p>
         `;
         handInfo.appendChild(comboInfo);
       } else {
@@ -971,11 +642,11 @@
           comboInfo.className = 'p-2 bg-light/5 rounded border border-light/10';
           comboInfo.innerHTML = `
             <p class="font-bold">${currentCombo.type}</p>
-            <p class="text-light/70">${currentCombo.score} 分</p>
+            <p class="text-light/70">${currentCombo.score} points</p>
           `;
           handInfo.appendChild(comboInfo);
         } else {
-          handInfo.innerHTML += '<p class="text-light/70">无有效组合</p>';
+          handInfo.innerHTML += '<p class="text-light/70">No valid combo</p>';
         }
       }
     }
@@ -1002,49 +673,6 @@
       gameOverModal.classList.remove('hidden');
     }
     
-    // 初始化拖拽区域事件
-    function initDragDropEvents() {
-      // 出牌区拖拽目标
-      playAreaContainer.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        playAreaContainer.classList.add('drag-over');
-      });
-      
-      playAreaContainer.addEventListener('dragleave', () => {
-        playAreaContainer.classList.remove('drag-over');
-      });
-      
-      playAreaContainer.addEventListener('drop', (e) => {
-        e.preventDefault();
-        playAreaContainer.classList.remove('drag-over');
-        const cardId = e.dataTransfer.getData('text/plain') || gameState.draggedCardId;
-        if (cardId) {
-          addToPlayArea(cardId);
-        }
-      });
-      
-      // 手牌区拖拽目标
-      handAreaContainer.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        handAreaContainer.classList.add('drag-over');
-      });
-      
-      handAreaContainer.addEventListener('dragleave', () => {
-        handAreaContainer.classList.remove('drag-over');
-      });
-      
-      handAreaContainer.addEventListener('drop', (e) => {
-        e.preventDefault();
-        handAreaContainer.classList.remove('drag-over');
-        const cardId = e.dataTransfer.getData('text/plain') || gameState.draggedCardId;
-        if (cardId) {
-          removeFromPlayArea(cardId);
-        }
-      });
-    }
-    
     // 事件监听
     drawBtn.addEventListener('click', () => {
       drawCards();
@@ -1066,15 +694,29 @@
       helpModal.classList.add('hidden');
     });
     
-    // 商店模态框
-    closeShopBtn.addEventListener('click', () => {
-      shopModal.classList.add('hidden');
-      // 重新启用抽牌按钮
-      drawBtn.disabled = false;
+    // 出牌区拖拽目标
+    playArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
     });
     
-    // 初始化拖拽事件
-    initDragDropEvents();
+    playArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const cardId = e.dataTransfer.getData('text/plain');
+      addToPlayArea(cardId);
+    });
+    
+    // 手牌区拖拽目标
+    handArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+    
+    handArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const cardId = e.dataTransfer.getData('text/plain');
+      removeFromPlayArea(cardId);
+    });
     
     // 初始化游戏
     window.addEventListener('DOMContentLoaded', initGame);
